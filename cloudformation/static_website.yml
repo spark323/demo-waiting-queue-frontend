@@ -31,12 +31,12 @@ Parameters:
   AcmCertificateArn:
     Description: AcmCertificateArn
     Type: String
-    Default: "arn:aws:acm:us-east-1:045662275863:certificate/f343f8c7-7aa5-4418-ad07-23d3d87d5785"
+
 
   HostedZoneName:
     Description: HostedZoneName
     Type: String
-    Default: rubywave.io
+
 
   ProjectName:
     Type: String
@@ -44,7 +44,7 @@ Parameters:
     Default: demo-waiting-queue
   ServiceDomain:
     Type: String
-    Default: q.rubywave.io
+
 
 Resources:
   DeploymentBucket:
