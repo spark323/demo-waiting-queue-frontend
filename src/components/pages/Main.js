@@ -45,7 +45,10 @@ export default class Main extends Component {
                 this.websocket.send(JSON.stringify({ message: 'request_update' }))
                 console.log(message)
                 this.timerPing = setInterval(() => {
-                    this.websocket.send(JSON.stringify({ message: 'ping' }));
+
+                    if (this.websocket) {
+                        this.websocket.send(JSON.stringify({ message: 'ping' }));
+                    }
                 }, 60 * 1000);
             };
             this.websocket.onmessage = (message) => {
@@ -85,7 +88,9 @@ export default class Main extends Component {
         else if (message.status == "update") {
             this.setState({
                 messageGroupId: message.messageGroupId ? message.messageGroupId : this.state.messageGroupId,
-                waitingNum: message.waitingNum
+                waitingNum: message.waitingNum,
+                waitingTime: message.waitingTime,
+                concurrency: message.concurrency,
             })
         }
         else if (message.status == "end") {
@@ -115,7 +120,7 @@ export default class Main extends Component {
     render() {
         return (
             <div>
-                <h3>사전예약 등록</h3>
+                <h3>이메일 등록</h3>
                 <div className="mb-12" style={{ textAlign: 'center' }}>
                     <label>MessageGroupId:{this.state.messageGroupId}</label>
                     {
@@ -141,10 +146,11 @@ export default class Main extends Component {
                         )
                     }
                     {
-                        (this.state.status == "end") && <div>만료되었습니다.</div>
+                        (this.state.status == "end") && <div>등록되었습니다.</div>
                     }
                     {
-                        (this.state.status == "waiting") && <div>{`대기중입니다. ${this.state.waitingNum == 0 ? "" : "대기열:" + this.state.waitingNum}`}</div>
+                        (this.state.status == "waiting") && <div>{`대기중입니다. ${this.state.waitingNum == 0 ? "" : "대기열:" + this.state.waitingNum},예상 대기시간:
+                        ${this.state.waitingNum == 0 ? "" : parseInt((this.state.waitingNum / this.state.concurrency) * this.state.waitingTime / 1000)}초`}</div>
                     }
 
                 </div>
