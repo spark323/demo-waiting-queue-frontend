@@ -12,3 +12,5 @@ REACT_APP_API_GATEWAY_ID=llb0g2of86
 WDS_SOCKET_PORT=0
 ```
 
+# 문의사항
+기타 문의사항은 spark@rubywave.io 로 문의해주세요!
